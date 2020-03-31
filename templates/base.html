@@ -1,0 +1,65 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}?v=11">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <title>django tours</title>
+</head>
+
+<body>
+{% if message %}
+    <p><strong>{{ message }}</strong></p>
+{% endif %}
+  <header>
+    <div class="header">
+      <a href="/tours/" class="logo">Django</a>
+      <div class="header-right">
+        <a href="/tours/tour/">Туры</a>
+        <a href="/tours/hotels/">Отели</a>
+        <a href="#main">About</a>
+          {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+                  <a href="/tours/admin/" class="btn-success">Посмотреть заявки</a>
+              {% endif %}
+            <a href="#" class="active">{{user.username}}</a>
+            <a href="/tours/password-change" class="active">Сменить пароль</a>
+            <a href="/tours/logout" class="active">Выйти</a>
+          {% else %}
+            <a href="/tours/login" class="active">Log in</a>
+            <a href="/tours/register" class="active">Зарегистрироваться</a>
+          {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="m">
+    {% block main %}
+
+    {% endblock %}
+  </main>
+
+  <footer id="main">
+    <div class="container">
+      <div class="brand">Django</div>
+      <nav>
+        <ul class="menu">
+          <li><a href="https://github.com/VadimGinko">Facebook</a></li>
+          <li><a href="https://github.com/VadimGinko">Vk</a></li>
+          <li><a href="https://github.com/VadimGinko">Instagram</a></li>
+        </ul>
+      </nav>
+      <p class="copyright">© 2020</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block main %}
+    <nav class="navbar" action="{% url 'tours:index' %}">
+       <a class="navbar-brand">Введите название либо страну</a>
+       <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="tours_search">
+       </form>
+    </nav>
+{% if page_obj.object_list %}
+    {% for tour in page_obj.object_list %}
+        <div class="row">
+           <div class="col-6 logo">
+              <a href="/tours/tour/{{ tour.id }}">
+              <img src="{{ MEDIA_ROOT }}{{ tour.photo.url }}" class="rounded-circle cyrcleimg" alt="Cinque Terre">
+              </a>
+           </div>
+           <div class="col-6 st">
+              <a href="/tours/tour/{{ tour.id }}">
+                 <h3 class="hh">{{ tour.tour_name }}    </h3>
+              </a>
+              <ul class="borderr ulli">
+                 <li>Страна: {{tour.country}}</li>
+                 <li>Цена: {{ tour.price }}$</li>
+                 <li>Количество дней: {{ tour.count_of_days }}</li>
+              </ul>
+           </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if is_paginated %}
+    <nav aria-label="..." class="tournav">
+       <ul class="pagination licenter">
+          <li class="page-item {% if not prev_url %}disabled{% endif %}">
+             <a class="page-link" href="{{ prev_url }}" tabindex="-1">Previous</a>
+          </li>
+          {% for i in page_obj.paginator.page_range %}
+              {% if page_obj.number == i %}
+
+                  <li class="page-item active">
+                     <a class="page-link" href="?page={{ i }}">{{ i }}<span class="sr-only">(current)</span></a>
+                  </li>
+
+              {% elif i > page_obj.number|add:-3 and i < page_obj.number|add:3%}
+
+                  <li class="page-item">
+                     <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+
+              {% endif %}
+          {% endfor %}
+
+          <li class="page-item {% if not next_url %}disabled{% endif %}">
+             <a class="page-link" href="{{ next_url }}" tabindex="-1">Next</a>
+          </li>
+       </ul>
+    </nav>
+{% endif %}
+{% endblock %}

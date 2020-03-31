@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="row colwh">
+   <div class="col-6 logo">
+      <img src="{{ MEDIA_ROOT }}{{ hotel.photo.url }}"   class="rounded sz" alt="Cinque Terre">
+   </div>
+   <div class="col-6 .table-responsive-sm ty">
+      <table class="table table_col">
+         <colgroup>
+            <col class="whitecol">
+            <col class="clrr">
+         </colgroup>
+         <tr>
+            <td>Название:</td>
+            <td>{{ hotel.hotel_name }}</td>
+         </tr>
+         <tr>
+            <td>Страна:</td>
+            <td>{{ hotel.country }}</td>
+         </tr>
+         <tr>
+            <td>Количество звёзд:</td>
+            <td>{{ hotel.stars_count }}</td>
+         </tr>
+         <tr>
+            <td>Наличие бассейна</td>
+                {% if hotel.pool %}
+                    <td>да</td>
+                {% else %}
+                    <td>нет</td>
+                {% endif %}
+         </tr>
+         <tr>
+            <td>Наличие пляжа</td>
+                {% if hotel.beach %}
+                    <td>да</td>
+                {% else %}
+                    <td>нет</td>
+                {% endif %}
+         </tr>
+         <tr>
+            <td>Наличие бесплатного бара</td>
+                {% if hotel.bar_free %}
+                    <td>да</td>
+                {% else %}
+                    <td>нет</td>
+                {% endif %}
+         </tr>
+         <tr>
+            <td>Почта отеля:</td>
+            <td>{{ hotel.hotel_mail }}</td>
+         </tr>
+         <tr>
+            <td>Телефон:</td>
+            <td>{{ hotel.hotel_phone }}</td>
+         </tr>
+      </table>
+   </div>
+</div>
+<div class="comm">
+   <div class="u">
+      {% if user.is_authenticated %}
+          <h4 class="imglink">Комментарии</h4>
+          <form action="post/" method="post">
+             {% csrf_token %}
+             <div class="input-group mb-3">
+                <input type="text"
+                   class="form-control"
+                   placeholder="Your message"
+                   name="message"/>
+                <div class="input-group-append">
+                   <input class="btn btn-success"
+                      type="submit"
+                      value="Send"/>
+                </div>
+             </div>
+          </form>
+      {% else %}
+          <h6 class="halfmrg">Оставлять комментарии могут только авторизованные пользователи</h6>
+      {% endif %}
+          <div id="history">
+             {% for message in latest_messages %}
+             <div class="card">
+                <div class="card-body">
+                   <strong>
+                   {{ message.author.username }}
+                   </strong>
+                   <br/>
+                   <em>
+                   {{ message.pub_date|date:'Y-m-d H:i:s' }}
+                   </em>
+                   <br/>
+                   {{ message.message }}
+                </div>
+             </div>
+             <br/>
+         {% endfor %}
+      </div>
+   </div>
+</div>
+{% endblock %}

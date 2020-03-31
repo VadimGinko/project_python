@@ -1,0 +1,18 @@
+{% extends  'base.html' %}
+{% load crispy_forms_tags %}
+{% block main %}
+    <div style="justify-content: center; text-align: center; margin-top: 40px">
+        <h4 class="card-title">Log in to your account</h4>
+        <form method="post" style="width: 60%;display: inline-block;">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success btn-block">
+                Log in
+            </button>
+            <a href=".." class="btn btn-danger btn-block">
+                Back to home
+            </a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block main %}
+<div class="row whitecol">
+   <div class="col-6 flx">
+      <img src="{{ MEDIA_ROOT }}{{ tour.photo.url }}"  style="height: 80%; width: 80%;" class="rounded sz" alt="Cinque Terre">
+   </div>
+   <div class="col-6 .table-responsive-sm ty">
+      <table class="table table_col">
+         <colgroup>
+            <col class="whitecol">
+            <col class="clrr">
+         </colgroup>
+         <tr>
+            <td>Название:</td>
+            <td>{{ tour.tour_name }}</td>
+         </tr>
+         <tr>
+            <td>Страна:</td>
+            <td>{{ tour.country }}</td>
+         </tr>
+         <tr>
+         <tr>
+            <td>Отель:</td>
+            <td>{{ tour.hotel.hotel_name }}</td>
+         </tr>
+         <tr>
+            <td>Начало тура:</td>
+            <td>{{ tour.tour_start }}</td>
+         </tr>
+         <tr>
+            <td>Окончание тура:</td>
+            <td>{{ tour.tour_finish }}</td>
+         </tr>
+         <tr>
+            <td>Количество дней:</td>
+            <td>{{ tour.count_of_days }}</td>
+         </tr>
+         <tr>
+            <td>Цена:</td>
+            <td>{{ tour.price }}</td>
+         </tr>
+         <tr>
+            <td>Место отправки:</td>
+            <td>{{ tour.departure_point }}</td>
+         </tr>
+         <tr>
+            <td>Количество свободных мест:</td>
+            <td>{{ tour.count_of_free_place }}</td>
+         </tr>
+      </table>
+   </div>
+</div>
+<div class="row imglink">
+   <div class="col-6">
+      <a href="#"  onclick="swa()" class="button7">Заказать тур</a>
+   </div>
+</div>
+<div id="overlay">
+   <div class="popup">
+      <button class="close" title="Закрыть окно" onclick="swa2()"></button>
+      <form method="POST">
+         {% csrf_token %}
+         <table>
+            {{ form|crispy }}
+             <td>
+             </td>
+         </table>
+         <input class="btn btn-primary btn-success disabled" type="submit" onclick="alert('С вами свяжется наш сотрудник')" value="Отправить заявку">
+      </form>
+   </div>
+</div>
+</div>
+{% endblock %}
